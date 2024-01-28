@@ -19,7 +19,14 @@ class CarouselImagesLoading extends CarouselImagesState {}
 class CarouselImagesLoaded extends CarouselImagesState {
   final List<CarouselImageEntity> imageObject;
   const CarouselImagesLoaded({required this.imageObject});
+   @override
+  List<Object> get props => [imageObject];
 }
 
 ///Error State Class
-class CarouselImagesError extends CarouselImagesState {}
+class CarouselImagesError extends CarouselImagesState {
+ final String errorMessage;
+  const CarouselImagesError({required this.errorMessage});
+   @override
+  List<Object> get props => [errorMessage];
+}

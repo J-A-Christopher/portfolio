@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:portfolio/features/imageCarousel/data/models/image_carousel_model.dart';
-import 'package:portfolio/features/imageCarousel/data/exceptions/exception.dart';
+import 'package:portfolio/common/exceptions/exception.dart';
 
 ///abstract class [ImageDataSource]
 abstract class ImageDataSource {
@@ -16,6 +16,7 @@ class ImageDataSourceImpl implements ImageDataSource {
   Future<List<ImageCarouselModel>> getCarouselData() async {
     const url = 'http://10.0.2.2:8080/portfolio/tour-data';
     final Response response = await dio.get(url);
+    //print(response.statusCode);
     if (response.statusCode != 200) {
       throw ServerException();
     } else {
@@ -24,7 +25,7 @@ class ImageDataSourceImpl implements ImageDataSource {
         var imageObject = ImageCarouselModel.fromJson(imageInfo);
         imageData.add(imageObject);
       }
-      print(imageData);
+    
       return imageData;
     }
   }
