@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:portfolio/features/imageCarousel/presentation/bloc/carousel_images_bloc.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:portfolio/features/welcomeCard/presentation/widgets/welcome_card.dart';
+
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -29,52 +31,70 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            BlocBuilder<CarouselImagesBloc, CarouselImagesState>(
-                builder: (context, state) {
-              if (state is CarouselImagesLoading) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              if (state is CarouselImagesLoaded) {
-                final fourElements = state.imageObject.sublist(0, 6);
-                final mediaQuery = MediaQuery.of(context).size;
-
-                return Column(
-                  children: [
-                    Stack(
-                      children: [
-                        CarouselSlider.builder(
-                          itemCount: fourElements.length,
-                          itemBuilder: (context, index, realIndex) {
-                            final urlImage = fourElements[index].imgUrl;
-                            final description =
-                                fourElements[index].imgDescription;
-
-                            return buildImage(urlImage, index, description);
-                            //Text(description!)
-                          },
-                          options: CarouselOptions(
-                              height: mediaQuery.height * 0.4,
-                              autoPlay: true,
-                              autoPlayInterval: const Duration(seconds: 2),
-                              viewportFraction: 1,
-                              onPageChanged: (index, reason) {
-                                setState(() {
-                                  activeIndex = index;
-                                });
-                              }),
-                        ),
-                        Positioned(
-                            left: 180,
-                            bottom: 5,
-                            child: buildIndicator(fourElements.length))
-                      ],
+            BlocListener<CarouselImagesBloc, CarouselImagesState>(
+              listener: (context, state) {
+                if (state is CarouselImagesError) {
+                  final errorMessage = state.errorMessage;
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                      errorMessage,
                     ),
-                  ],
-                );
-              }
+                  ));
+                }
+              },
+              child: BlocBuilder<CarouselImagesBloc, CarouselImagesState>(
+                  builder: (context, state) {
+                if (state is CarouselImagesLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                }
 
-              return const SizedBox();
-            })
+                if (state is CarouselImagesLoaded) {
+                  final fourElements = state.imageObject.sublist(0, 6);
+                  final mediaQuery = MediaQuery.of(context).size;
+
+                  return Column(
+                    children: [
+                      Stack(
+                        children: [
+                          CarouselSlider.builder(
+                            itemCount: fourElements.length,
+                            itemBuilder: (context, index, realIndex) {
+                              final urlImage = fourElements[index].imgUrl;
+                              final description =
+                                  fourElements[index].imgDescription;
+
+                              return buildImage(urlImage, index, description);
+                            },
+                            options: CarouselOptions(
+                                height: mediaQuery.height * 0.4,
+                                autoPlay: true,
+                                autoPlayInterval: const Duration(seconds: 2),
+                                viewportFraction: 1,
+                                onPageChanged: (index, reason) {
+                                  setState(() {
+                                    activeIndex = index;
+                                  });
+                                }),
+                          ),
+                          Positioned(
+                              left: 180,
+                              bottom: 5,
+                              child: buildIndicator(fourElements.length))
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 7,
+                      ),
+                      const Padding(
+                          padding: EdgeInsets.only(left: 7, right: 7),
+                          child: WelcomeCard()),
+                    ],
+                  );
+                }
+
+                return const SizedBox();
+              }),
+            )
           ],
         ),
       ),
@@ -119,11 +139,11 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.only(left: 8.0),
               child: Text(
                 description!,
-                style: GoogleFonts.patrickHand(
-                    textStyle: const TextStyle(
-                        fontStyle: FontStyle.italic,
-                        fontSize: 18,
-                        color: Colors.white)),
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontStyle: FontStyle.italic,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
             ),
           ),
