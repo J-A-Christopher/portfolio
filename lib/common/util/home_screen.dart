@@ -1,12 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:portfolio/common/components/grid_component.dart';
+import 'package:portfolio/common/components/social_media_component.dart';
+import 'package:portfolio/common/components/text_component.dart';
+import 'package:portfolio/common/util/colors.dart';
 import 'package:portfolio/features/imageCarousel/presentation/bloc/carousel_images_bloc.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:portfolio/features/welcomeCard/presentation/widgets/welcome_card.dart';
 
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 ///[HomeScreen] class
 class HomeScreen extends StatefulWidget {
@@ -18,6 +24,41 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  Future<void> _launchTwitter() async {
+    final url =
+        Uri.parse('https://x.com/Cj_jesse_?t=lWI_KfIcOC6Zwa_xiANPSQ&s=09');
+
+    if (!await launchUrl(url)) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Could not launch X')));
+      }
+    }
+  }
+
+  Future<void> _launchLinkedIn() async {
+    final url = Uri.parse(
+        'https://www.linkedin.com/in/christopher-jesse?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app');
+
+    if (!await launchUrl(url)) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Could not launch LinkedIn')));
+      }
+    }
+  }
+
+  Future<void> _launchInstagram() async {
+    final url = Uri.parse('https://www.instagram.com/chief_sensei/');
+
+    if (!await launchUrl(url)) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Could not launch Instagram')));
+      }
+    }
+  }
+
   int activeIndex = 0;
   @override
   void initState() {
@@ -29,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
+        child: ListView(
           children: [
             BlocListener<CarouselImagesBloc, CarouselImagesState>(
               listener: (context, state) {
@@ -52,7 +93,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   final fourElements = state.imageObject.sublist(0, 6);
                   final mediaQuery = MediaQuery.of(context).size;
 
-                  return Column(
+                  return ListView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
                     children: [
                       Stack(
                         children: [
@@ -88,13 +131,55 @@ class _HomeScreenState extends State<HomeScreen> {
                       const Padding(
                           padding: EdgeInsets.only(left: 7, right: 7),
                           child: WelcomeCard()),
+                      const GridComponent(),
+                      const TextComponent(
+                        text: 'Connect with me',
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0, top: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            SocialMediaComponent(
+                              color: AppColors.xblack,
+                              icon: const FaIcon(
+                                FontAwesomeIcons.x,
+                                color: Colors.white,
+                              ),
+                              func: () {
+                                _launchTwitter();
+                              },
+                            ),
+                            SocialMediaComponent(
+                              color: AppColors.linkedin,
+                              icon: const FaIcon(
+                                FontAwesomeIcons.linkedinIn,
+                                color: Colors.white,
+                              ),
+                              func: () {
+                                _launchLinkedIn();
+                              },
+                            ),
+                            SocialMediaComponent(
+                              color: AppColors.instagram,
+                              icon: const FaIcon(
+                                FontAwesomeIcons.instagram,
+                                color: Colors.white,
+                              ),
+                              func: () {
+                                _launchInstagram();
+                              },
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   );
                 }
 
                 return const SizedBox();
               }),
-            )
+            ),
           ],
         ),
       ),

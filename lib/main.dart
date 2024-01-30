@@ -52,7 +52,7 @@ class Portfolio extends StatelessWidget {
             create: (_) => getIt<CarouselImagesBloc>(),
           ),
           BlocProvider(
-            create: (_) => BioCardBloc(),
+            create: (_) =>getIt< BioCardBloc>(),
           ),
         ],
         child: const HomeScreen(),
