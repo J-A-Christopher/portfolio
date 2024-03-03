@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class GridComponent extends StatelessWidget {
   const GridComponent({super.key});
@@ -42,6 +43,15 @@ class GridComponent extends StatelessWidget {
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                   content: Text('Portfolio page loading..')));
+                        case 'Experiences':
+                          context.push(
+                            '/experiences',
+                          );
+                        case 'Contact':
+                          context.push(
+                            '/contact',
+                            extra: gridImageName[0]
+                          );
                       }
                     },
                     child: Card(
