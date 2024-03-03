@@ -56,9 +56,7 @@ class _WelcomeCardState extends State<WelcomeCard> {
                                 ? 'Hi.. am Cj, an Android developer. I will create you an app like this from as little as \$100 in a week\'s time.'
                                 : '$bio',
                             style: GoogleFonts.quicksand(
-                                fontSize: 12,
-                                color: AppColors.fontColor,
-                                fontWeight: FontWeight.bold),
+                                fontSize: 12, fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),

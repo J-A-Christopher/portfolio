@@ -34,28 +34,39 @@ class GridComponent extends StatelessWidget {
               mainAxisSpacing: 20),
           children: List.generate(
               gridTitle.length,
-              (index) => Card(
-                    elevation: 5,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Column(
-                        children: [
-                          Image.asset(
-                            'assets/${gridImageName[index]}.png',
-                            height: 120,
-                            fit: BoxFit.cover,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              gridTitle[index],
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(fontSize: 15),
+              (index) => InkWell(
+                    onTap: () {
+                      print(gridTitle[index]);
+                      switch (gridTitle[index]) {
+                        case 'Portfolio':
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('Portfolio page loading..')));
+                      }
+                    },
+                    child: Card(
+                      elevation: 5,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              'assets/${gridImageName[index]}.png',
+                              height: 120,
+                              fit: BoxFit.cover,
                             ),
-                          )
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                gridTitle[index],
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(fontSize: 15),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ))),

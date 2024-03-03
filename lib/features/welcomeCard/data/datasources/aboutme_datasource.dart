@@ -13,7 +13,8 @@ class AboutMeImpl implements AboutMe {
   Future<List<AboutMeModel>> getAboutData() async {
     final dio = Dio();
     final Response response =
-        await dio.get('http://10.0.2.2:8080/portfolio/aboutme');
+        //await dio.get('http://10.0.2.2:8080/portfolio/aboutme');
+           await dio.get('http://192.168.81.5:8080/portfolio/aboutme');
 
     if (response.statusCode != 200) {
       throw ServerException();
