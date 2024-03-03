@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:portfolio/common/components/grid_component.dart';
 import 'package:portfolio/common/components/social_media_component.dart';
 import 'package:portfolio/common/components/text_component.dart';
@@ -12,7 +13,7 @@ import 'package:portfolio/features/welcomeCard/presentation/widgets/welcome_card
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
+//import 'package:url_launcher/url_launcher.dart';
 
 ///[HomeScreen] class
 class HomeScreen extends StatefulWidget {
@@ -24,11 +25,33 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Future<void> _launchTwitter() async {
+  Future<void> _launchTwitter(BuildContext context) async {
+    final theme = Theme.of(context);
     final url =
         Uri.parse('https://x.com/Cj_jesse_?t=lWI_KfIcOC6Zwa_xiANPSQ&s=09');
 
-    if (!await launchUrl(url)) {
+    try {
+      await launchUrl(
+        url,
+        customTabsOptions: CustomTabsOptions(
+          colorSchemes: CustomTabsColorSchemes.defaults(
+            toolbarColor: theme.colorScheme.surface,
+          ),
+          shareState: CustomTabsShareState.on,
+          urlBarHidingEnabled: true,
+          showTitle: true,
+          closeButton: CustomTabsCloseButton(
+            icon: CustomTabsCloseButtonIcons.back,
+          ),
+        ),
+        safariVCOptions: SafariViewControllerOptions(
+          preferredBarTintColor: theme.colorScheme.surface,
+          preferredControlTintColor: theme.colorScheme.onSurface,
+          barCollapsingEnabled: true,
+          dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
+        ),
+      );
+    } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text('Could not launch X')));
@@ -36,11 +59,33 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Future<void> _launchLinkedIn() async {
+  Future<void> _launchLinkedIn(BuildContext context) async {
+    final theme = Theme.of(context);
     final url = Uri.parse(
         'https://www.linkedin.com/in/christopher-jesse?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app');
 
-    if (!await launchUrl(url)) {
+    try {
+      await launchUrl(
+        url,
+        customTabsOptions: CustomTabsOptions(
+          colorSchemes: CustomTabsColorSchemes.defaults(
+            toolbarColor: theme.colorScheme.surface,
+          ),
+          shareState: CustomTabsShareState.on,
+          urlBarHidingEnabled: true,
+          showTitle: true,
+          closeButton: CustomTabsCloseButton(
+            icon: CustomTabsCloseButtonIcons.back,
+          ),
+        ),
+        safariVCOptions: SafariViewControllerOptions(
+          preferredBarTintColor: theme.colorScheme.surface,
+          preferredControlTintColor: theme.colorScheme.onSurface,
+          barCollapsingEnabled: true,
+          dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
+        ),
+      );
+    } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Could not launch LinkedIn')));
@@ -48,10 +93,33 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Future<void> _launchInstagram() async {
+  Future<void> _launchInstagram(BuildContext context) async {
+    final theme = Theme.of(context);
     final url = Uri.parse('https://www.instagram.com/chief_sensei/');
 
-    if (!await launchUrl(url)) {
+    try {
+      await launchUrl(
+        url,
+        customTabsOptions: CustomTabsOptions(
+          colorSchemes: CustomTabsColorSchemes.defaults(
+            toolbarColor: theme.colorScheme.surface,
+          ),
+          shareState: CustomTabsShareState.on,
+          urlBarHidingEnabled: true,
+          showTitle: true,
+          closeButton: CustomTabsCloseButton(
+            icon: CustomTabsCloseButtonIcons.back,
+          ),
+        ),
+        safariVCOptions: SafariViewControllerOptions(
+          preferredBarTintColor: theme.colorScheme.surface,
+          preferredControlTintColor: theme.colorScheme.onSurface,
+          barCollapsingEnabled: true,
+          dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
+        ),
+      );
+    } catch (e) {
+      // If the URL launch fails, an exception will be thrown. (For example, if no browser app is installed on the Android device.)
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Could not launch Instagram')));
@@ -147,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: Colors.white,
                               ),
                               func: () {
-                                _launchTwitter();
+                                _launchTwitter(context);
                               },
                             ),
                             SocialMediaComponent(
@@ -157,7 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: Colors.white,
                               ),
                               func: () {
-                                _launchLinkedIn();
+                                _launchLinkedIn(context);
                               },
                             ),
                             SocialMediaComponent(
@@ -167,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: Colors.white,
                               ),
                               func: () {
-                                _launchInstagram();
+                                _launchInstagram(context);
                               },
                             ),
                           ],
