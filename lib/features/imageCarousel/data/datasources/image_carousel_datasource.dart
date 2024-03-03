@@ -14,7 +14,9 @@ class ImageDataSourceImpl implements ImageDataSource {
   final dio = Dio();
   @override
   Future<List<ImageCarouselModel>> getCarouselData() async {
-    const url = 'http://10.0.2.2:8080/portfolio/tour-data';
+    //const url = 'http://10.0.2.2:8080/portfolio/tour-data';
+    const url = 'http://192.168.81.5:8080/portfolio/tour-data';
+
     final Response response = await dio.get(url);
     //print(response.statusCode);
     if (response.statusCode != 200) {
@@ -25,7 +27,7 @@ class ImageDataSourceImpl implements ImageDataSource {
         var imageObject = ImageCarouselModel.fromJson(imageInfo);
         imageData.add(imageObject);
       }
-    
+
       return imageData;
     }
   }

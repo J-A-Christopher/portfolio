@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/common/util/colors.dart';
 
 class TextComponent extends StatelessWidget {
   final String text;
@@ -12,9 +11,9 @@ class TextComponent extends StatelessWidget {
       child: Text(
         text,
         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-            color: AppColors.fontColor),
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
       ),
     );
   }

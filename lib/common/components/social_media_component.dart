@@ -12,14 +12,26 @@ class SocialMediaComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        func();
-      },
-      child: CircleAvatar(
-        backgroundColor: color,
-        radius: 25,
-        child: icon,
-      ),
-    );
+        onTap: () {
+          func();
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.8),
+                spreadRadius: 2,
+                blurRadius: 8,
+                offset: const Offset(0, 0),
+              ),
+            ],
+          ),
+          child: CircleAvatar(
+            backgroundColor: color,
+            radius: 25,
+            child: icon,
+          ),
+        ));
   }
 }
