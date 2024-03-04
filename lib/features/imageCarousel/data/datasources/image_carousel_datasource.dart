@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:portfolio/common/constants/constants.dart';
 import 'package:portfolio/features/imageCarousel/data/models/image_carousel_model.dart';
 import 'package:portfolio/common/exceptions/exception.dart';
 
@@ -15,7 +16,7 @@ class ImageDataSourceImpl implements ImageDataSource {
   @override
   Future<List<ImageCarouselModel>> getCarouselData() async {
     //const url = 'http://10.0.2.2:8080/portfolio/tour-data';
-    const url = 'http://192.168.81.5:8080/portfolio/tour-data';
+    const url = '$baseServerUrl/tour-data';
 
     final Response response = await dio.get(url);
     //print(response.statusCode);
