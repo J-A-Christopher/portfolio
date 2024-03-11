@@ -59,79 +59,89 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       appBar: AppBar(
         title: const Text('Sample Projects'),
       ),
-      body: BlocBuilder<ProjectsBloc, ProjectsState>(builder: (context, state) {
-        if (state is ProjectsLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        if (state is ProjectsLoaded) {
-          final projObject = state.projData;
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListView.builder(
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    _launchGivenProject(
-                        context, projObject[index].projUrl ?? '');
-                  },
-                  child: Card(
-                    child: Row(
-                      children: [
-                        Expanded(
-                            flex: 2,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 15.0),
-                                  child: Text(
-                                    '${projObject[index].projectName}',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .secondary),
+      body: BlocListener<ProjectsBloc, ProjectsState>(
+        listener: (context, state) {
+          if (state is ProjectsError) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.errorMessage)));
+          }
+        },
+        child:
+            BlocBuilder<ProjectsBloc, ProjectsState>(builder: (context, state) {
+          if (state is ProjectsLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (state is ProjectsLoaded) {
+            final projObject = state.projData;
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {
+                      _launchGivenProject(
+                          context, projObject[index].projUrl ?? '');
+                    },
+                    child: Card(
+                      child: Row(
+                        children: [
+                          Expanded(
+                              flex: 2,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 15.0),
+                                    child: Text(
+                                      '${projObject[index].projectName}',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary),
+                                    ),
                                   ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 10.0),
+                                    child: Text(
+                                      '${projObject[index].description}',
+                                      maxLines: 3,
+                                    ),
+                                  )
+                                ],
+                              )),
+                          Expanded(
+                              flex: 1,
+                              child: CachedNetworkImage(
+                                errorWidget: (context, url, error) => Icon(
+                                  Icons.error,
+                                  color: Theme.of(context).colorScheme.error,
+                                  size: 20,
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 10.0),
-                                  child: Text(
-                                    '${projObject[index].description}',
-                                    maxLines: 3,
-                                  ),
-                                )
-                              ],
-                            )),
-                        Expanded(
-                            flex: 1,
-                            child: CachedNetworkImage(
-                              errorWidget: (context, url, error) => Icon(
-                                Icons.error,
-                                color: Theme.of(context).colorScheme.error,
-                                size: 20,
-                              ),
-                              placeholder: (context, url) => const Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                              imageUrl: '${projObject[index].imageUrl}',
-                              height: 100,
-                              fit: BoxFit.cover,
-                            ))
-                      ],
+                                placeholder: (context, url) => const Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                                imageUrl: '${projObject[index].imageUrl}',
+                                height: 100,
+                                fit: BoxFit.cover,
+                              ))
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
-              itemCount: projObject.length,
-            ),
-          );
-        }
-        return const SizedBox.shrink();
-      }),
+                  );
+                },
+                itemCount: projObject.length,
+              ),
+            );
+          }
+          return const SizedBox.shrink();
+        }),
+      ),
     );
   }
 }

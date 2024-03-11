@@ -6,6 +6,7 @@ import 'package:portfolio/features/experiences/presentation/screens/experiences_
 import 'package:portfolio/features/imageCarousel/domain/entities/image_domain_entity.dart';
 import 'package:portfolio/features/mage_detail.dart';
 import 'package:portfolio/features/projects/presentation/screens/projects_screen.dart';
+import 'package:portfolio/features/resume/presentation/screens/resume_screen.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(routes: [
@@ -27,7 +28,11 @@ class AppRouter {
             )),
     GoRoute(
         path: '/blog-screen', builder: (context, state) => const BlogsScreen()),
-         GoRoute(
-        path: '/portfolio-screen', builder: (context, state) => const ProjectsScreen()),
+    GoRoute(
+        path: '/portfolio-screen',
+        builder: (context, state) => const ProjectsScreen()),
+    GoRoute(
+        path: '/resume-screen',
+        builder: (context, state) => const ResumeScreen()),
   ]);
 }

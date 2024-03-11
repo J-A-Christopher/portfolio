@@ -50,6 +50,9 @@ class GridComponent extends StatelessWidget {
                           context.push('/contact', extra: gridImageName[0]);
                         case 'Blogs':
                           context.push('/blog-screen');
+
+                        case 'Resume':
+                          context.push('/resume-screen');
                       }
                     },
                     child: Card(

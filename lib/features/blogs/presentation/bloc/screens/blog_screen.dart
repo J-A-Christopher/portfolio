@@ -63,50 +63,59 @@ class _BlogsScreenState extends State<BlogsScreen> {
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: BlocBuilder<BlogsBloc, BlogsState>(builder: (context, state) {
-            if (state is BlogsLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (state is BlogsLoaded) {
-              final blogObject = state.blogEntity;
-              return ListView.builder(
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      _launchGivenBlog(
-                          context, blogObject[index].blogUrl ?? '');
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 10.0),
-                      child: Card(
-                        child: ListTile(
-                            leading: const Icon(
-                              Icons.book,
-                              size: 30,
-                            ),
-                            title: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '${blogObject[index].title}',
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
+          child: BlocListener<BlogsBloc, BlogsState>(
+            listener: (context, state) {
+              if (state is BlogsError) {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(state.error)));
+              }
+            },
+            child:
+                BlocBuilder<BlogsBloc, BlogsState>(builder: (context, state) {
+              if (state is BlogsLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (state is BlogsLoaded) {
+                final blogObject = state.blogEntity;
+                return ListView.builder(
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        _launchGivenBlog(
+                            context, blogObject[index].blogUrl ?? '');
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        child: Card(
+                          child: ListTile(
+                              leading: const Icon(
+                                Icons.book,
+                                size: 30,
+                              ),
+                              title: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '${blogObject[index].title}',
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                Text('${blogObject[index].blogDescription}'),
-                              ],
-                            )),
+                                  Text('${blogObject[index].blogDescription}'),
+                                ],
+                              )),
+                        ),
                       ),
-                    ),
-                  );
-                },
-                itemCount: blogObject.length,
-              );
-            }
-            return const SizedBox.shrink();
-          }),
+                    );
+                  },
+                  itemCount: blogObject.length,
+                );
+              }
+              return const SizedBox.shrink();
+            }),
+          ),
         ));
   }
 }
