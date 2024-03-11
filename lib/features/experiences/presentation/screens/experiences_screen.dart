@@ -2,7 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:portfolio/common/util/shimmer_screen.dart';
 import 'package:portfolio/features/imageCarousel/presentation/bloc/carousel_images_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Experiences extends StatefulWidget {
   const Experiences({super.key});
@@ -28,7 +30,18 @@ class _ExperiencesState extends State<Experiences> {
       body: BlocBuilder<CarouselImagesBloc, CarouselImagesState>(
           builder: (context, state) {
         if (state is CarouselImagesLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return ListView.builder(
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                child: Shimmer.fromColors(
+                    baseColor: Colors.grey.withOpacity(0.3),
+                    highlightColor: Colors.grey.withOpacity(0.5),
+                    child: const ShimmerWidget()),
+              );
+            },
+            itemCount: 12,
+          );
         }
         if (state is CarouselImagesLoaded) {
           final carouselObject = state.imageObject;
@@ -52,11 +65,16 @@ class _ExperiencesState extends State<Experiences> {
                             child: CachedNetworkImage(
                               imageUrl: carouselObject[index].imgUrl ?? '',
                               placeholder: (context, url) {
-                                return const Center(
-                                    child: Text(
-                                  'Loading..',
-                                  style: TextStyle(fontSize: 25),
-                                ));
+                                return Shimmer.fromColors(
+                                    baseColor: Colors.grey.withOpacity(0.3),
+                                    highlightColor:
+                                        Colors.grey.withOpacity(0.5),
+                                    child: const ShimmerWidget());
+                                //  const Center(
+                                //     child: Text(
+                                //   'Loading..',
+                                //   style: TextStyle(fontSize: 25),
+                                // ));
                               },
                               errorWidget: (context, url, error) {
                                 return Center(
@@ -76,7 +94,6 @@ class _ExperiencesState extends State<Experiences> {
                         ),
                         Positioned(
                           bottom: 30,
-
                           child: Container(
                             width: mediaQuery.width,
                             decoration: BoxDecoration(

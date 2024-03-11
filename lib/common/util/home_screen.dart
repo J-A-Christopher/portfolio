@@ -193,57 +193,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: buildIndicator(fourElements.length))
                         ],
                       ),
-                      const SizedBox(
-                        height: 7,
-                      ),
-                      const Padding(
-                          padding: EdgeInsets.only(left: 7, right: 7),
-                          child: WelcomeCard()),
-                      const GridComponent(),
-                      const TextComponent(
-                        text: 'Connect with me',
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0, top: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            SocialMediaComponent(
-                              color: AppColors.xblack,
-                              icon: const FaIcon(
-                                FontAwesomeIcons.x,
-                                color: Colors.white,
-                              ),
-                              func: () {
-                                _launchTwitter(context);
-                              },
-                            ),
-                            SocialMediaComponent(
-                              color: AppColors.linkedin,
-                              icon: const FaIcon(
-                                FontAwesomeIcons.linkedinIn,
-                                color: Colors.white,
-                              ),
-                              func: () {
-                                _launchLinkedIn(context);
-                              },
-                            ),
-                            SocialMediaComponent(
-                              color: AppColors.instagram,
-                              icon: const FaIcon(
-                                FontAwesomeIcons.instagram,
-                                color: Colors.white,
-                              ),
-                              func: () {
-                                _launchInstagram(context);
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      )
                     ],
                   );
                 }
@@ -251,6 +200,57 @@ class _HomeScreenState extends State<HomeScreen> {
                 return const SizedBox();
               }),
             ),
+            const SizedBox(
+              height: 7,
+            ),
+            const Padding(
+                padding: EdgeInsets.only(left: 7, right: 7),
+                child: WelcomeCard()),
+            const GridComponent(),
+            const TextComponent(
+              text: 'Connect with me',
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, top: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SocialMediaComponent(
+                    color: AppColors.xblack,
+                    icon: const FaIcon(
+                      FontAwesomeIcons.x,
+                      color: Colors.white,
+                    ),
+                    func: () {
+                      _launchTwitter(context);
+                    },
+                  ),
+                  SocialMediaComponent(
+                    color: AppColors.linkedin,
+                    icon: const FaIcon(
+                      FontAwesomeIcons.linkedinIn,
+                      color: Colors.white,
+                    ),
+                    func: () {
+                      _launchLinkedIn(context);
+                    },
+                  ),
+                  SocialMediaComponent(
+                    color: AppColors.instagram,
+                    icon: const FaIcon(
+                      FontAwesomeIcons.instagram,
+                      color: Colors.white,
+                    ),
+                    func: () {
+                      _launchInstagram(context);
+                    },
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            )
           ],
         ),
       ),

@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:portfolio/common/router/app_router.dart';
 import 'package:portfolio/common/util/app_global_bloc_observer.dart';
 import 'package:portfolio/di/di.dart';
+import 'package:portfolio/features/blogs/presentation/bloc/blogs_bloc.dart';
 import 'package:portfolio/features/contacts/presentation/bloc/contact_info_bloc.dart';
 import 'package:portfolio/features/imageCarousel/presentation/bloc/carousel_images_bloc.dart';
-import 'package:portfolio/common/util/home_screen.dart';
 import 'package:portfolio/features/welcomeCard/presentation/bloc/bio_card_bloc.dart';
 
 void main() {
@@ -30,14 +30,11 @@ class Portfolio extends StatelessWidget {
         BlocProvider(
           create: (_) => getIt<BioCardBloc>(),
         ),
-        BlocProvider(create: (_) => getIt<ContactInfoBloc>())
+        BlocProvider(create: (_) => getIt<ContactInfoBloc>()),
+        BlocProvider(create: (_) => getIt<BlogsBloc>())
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
-        // Theme config for FlexColorScheme version 7.3.x. Make sure you use
-        // same or higher package version, but still same major version. If you
-        // use a lower package version, some properties may not be supported.
-        // In that case remove them after copying this theme to your app.
         theme: FlexThemeData.light(
           colors: const FlexSchemeColor(
             primary: Color(0xffdc3535),
@@ -150,25 +147,9 @@ class Portfolio extends StatelessWidget {
           visualDensity: FlexColorScheme.comfortablePlatformDensity,
           useMaterial3: true,
           swapLegacyOnMaterial3: true,
-          // To use the Playground font, add GoogleFonts package and uncomment
-          // fontFamily: GoogleFonts.notoSans().fontFamily,
         ),
-        // If you do not have a themeMode switch, uncomment this line
-        // to let the device system mode control the theme mode:
-        // themeMode: ThemeMode.system,
-        routerConfig: AppRouter.router,
 
-        // home: MultiBlocProvider(
-        //   providers: [
-        //     BlocProvider(
-        //       create: (_) => getIt<CarouselImagesBloc>(),
-        //     ),
-        //     BlocProvider(
-        //       create: (_) =>getIt< BioCardBloc>(),
-        //     ),
-        //   ],
-        //   child: const HomeScreen(),
-        // ),
+        routerConfig: AppRouter.router,
       ),
     );
   }
