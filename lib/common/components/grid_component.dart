@@ -37,7 +37,6 @@ class GridComponent extends StatelessWidget {
               gridTitle.length,
               (index) => InkWell(
                     onTap: () {
-                      print(gridTitle[index]);
                       switch (gridTitle[index]) {
                         case 'Portfolio':
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -48,10 +47,9 @@ class GridComponent extends StatelessWidget {
                             '/experiences',
                           );
                         case 'Contact':
-                          context.push(
-                            '/contact',
-                            extra: gridImageName[0]
-                          );
+                          context.push('/contact', extra: gridImageName[0]);
+                        case 'Blogs':
+                          context.push('/blog-screen');
                       }
                     },
                     child: Card(
