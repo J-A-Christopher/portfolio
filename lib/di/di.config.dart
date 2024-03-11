@@ -40,6 +40,16 @@ import 'package:portfolio/features/imageCarousel/domain/usecases/image_usecase.d
     as _i19;
 import 'package:portfolio/features/imageCarousel/presentation/bloc/carousel_images_bloc.dart'
     as _i10;
+import 'package:portfolio/features/projects/data/datasources/project_datasource.dart'
+    as _i23;
+import 'package:portfolio/features/projects/data/repository/proj_dat_repo.dart'
+    as _i25;
+import 'package:portfolio/features/projects/domain/repository/proj_repos.dart'
+    as _i24;
+import 'package:portfolio/features/projects/domain/usecases/proj_usecases.dart'
+    as _i22;
+import 'package:portfolio/features/projects/presentation/bloc/projects_bloc.dart'
+    as _i26;
 import 'package:portfolio/features/welcomeCard/data/datasources/aboutme_datasource.dart'
     as _i3;
 import 'package:portfolio/features/welcomeCard/data/repository/aboutme_data_repo.dart'
@@ -47,7 +57,7 @@ import 'package:portfolio/features/welcomeCard/data/repository/aboutme_data_repo
 import 'package:portfolio/features/welcomeCard/domain/repositories/welcome.repo.dart'
     as _i4;
 import 'package:portfolio/features/welcomeCard/domain/usecases/welcome_usecase.dart'
-    as _i22;
+    as _i27;
 import 'package:portfolio/features/welcomeCard/presentation/bloc/bio_card_bloc.dart'
     as _i6;
 
@@ -78,7 +88,11 @@ extension GetItInjectableX on _i1.GetIt {
     gh.factory<_i18.ImageDataSource>(() => _i18.ImageDataSourceImpl());
     gh.factory<_i19.ImageDataUsesCase>(() => _i19.ImageDataUsesCase());
     gh.factory<_i20.ImageRepo>(() => _i21.ImageRepoImpl());
-    gh.factory<_i22.WelcomeUseCase>(() => _i22.WelcomeUseCase());
+    gh.factory<_i22.ProjUseCase>(() => _i22.ProjUseCase());
+    gh.factory<_i23.ProjectDataSource>(() => _i23.ProjectModelImpl());
+    gh.factory<_i24.ProjectRepo>(() => _i25.ProjRepoImpl());
+    gh.factory<_i26.ProjectsBloc>(() => _i26.ProjectsBloc());
+    gh.factory<_i27.WelcomeUseCase>(() => _i27.WelcomeUseCase());
     return this;
   }
 }

@@ -39,9 +39,9 @@ class GridComponent extends StatelessWidget {
                     onTap: () {
                       switch (gridTitle[index]) {
                         case 'Portfolio':
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text('Portfolio page loading..')));
+                          context.push(
+                            '/portfolio-screen',
+                          );
                         case 'Experiences':
                           context.push(
                             '/experiences',

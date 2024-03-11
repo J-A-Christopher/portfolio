@@ -9,11 +9,17 @@ class BlogsModel extends BlogEntity with EquatableMixin {
       this.id,
       this.title,
       this.updatedAt});
+  @override
   final int? id;
+  @override
   final String? title;
+  @override
   final String? blogDescription;
+  @override
   final String? blogUrl;
+  @override
   final String? createdAt;
+  @override
   final String? updatedAt;
 
   factory BlogsModel.fromJson(Map<String, dynamic> json) {

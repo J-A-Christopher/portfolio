@@ -5,6 +5,7 @@ import 'package:portfolio/features/contacts/presentation/screens/contact_screen.
 import 'package:portfolio/features/experiences/presentation/screens/experiences_screen.dart';
 import 'package:portfolio/features/imageCarousel/domain/entities/image_domain_entity.dart';
 import 'package:portfolio/features/mage_detail.dart';
+import 'package:portfolio/features/projects/presentation/screens/projects_screen.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(routes: [
@@ -26,5 +27,7 @@ class AppRouter {
             )),
     GoRoute(
         path: '/blog-screen', builder: (context, state) => const BlogsScreen()),
+         GoRoute(
+        path: '/portfolio-screen', builder: (context, state) => const ProjectsScreen()),
   ]);
 }

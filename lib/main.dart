@@ -7,6 +7,7 @@ import 'package:portfolio/di/di.dart';
 import 'package:portfolio/features/blogs/presentation/bloc/blogs_bloc.dart';
 import 'package:portfolio/features/contacts/presentation/bloc/contact_info_bloc.dart';
 import 'package:portfolio/features/imageCarousel/presentation/bloc/carousel_images_bloc.dart';
+import 'package:portfolio/features/projects/presentation/bloc/projects_bloc.dart';
 import 'package:portfolio/features/welcomeCard/presentation/bloc/bio_card_bloc.dart';
 
 void main() {
@@ -31,7 +32,9 @@ class Portfolio extends StatelessWidget {
           create: (_) => getIt<BioCardBloc>(),
         ),
         BlocProvider(create: (_) => getIt<ContactInfoBloc>()),
-        BlocProvider(create: (_) => getIt<BlogsBloc>())
+        BlocProvider(create: (_) => getIt<BlogsBloc>()),
+        BlocProvider(create: (_)=>getIt<ProjectsBloc>())
+
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
