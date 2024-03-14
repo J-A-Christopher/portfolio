@@ -5,8 +5,8 @@ import 'package:portfolio/features/contacts/presentation/bloc/contact_info_bloc.
 import 'package:dropdown_button2/dropdown_button2.dart';
 
 class Contact extends StatefulWidget {
-  const Contact({super.key, required this.description});
-  final String description;
+  //const Contact({super.key, required this.description});
+  //final String description;
 
   @override
   State<Contact> createState() => _ContactState();

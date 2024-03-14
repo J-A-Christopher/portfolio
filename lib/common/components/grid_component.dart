@@ -53,6 +53,9 @@ class GridComponent extends StatelessWidget {
 
                         case 'Resume':
                           context.push('/resume-screen');
+
+                        case 'Services':
+                          context.push('/services');
                       }
                     },
                     child: Card(

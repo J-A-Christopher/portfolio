@@ -134,9 +134,11 @@ class _HomeScreenState extends State<HomeScreen> {
     context.read<CarouselImagesBloc>().add(const GetCarouselImages());
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+     
       body: SafeArea(
         child: ListView(
           children: [
