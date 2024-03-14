@@ -1,12 +1,14 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:portfolio/common/router/stateful_router.dart';
 import 'package:portfolio/common/util/app_global_bloc_observer.dart';
 import 'package:portfolio/di/di.dart';
 import 'package:portfolio/features/blogs/presentation/bloc/blogs_bloc.dart';
 import 'package:portfolio/features/contacts/presentation/bloc/contact_info_bloc.dart';
 import 'package:portfolio/features/imageCarousel/presentation/bloc/carousel_images_bloc.dart';
+import 'package:portfolio/features/news/presentation/bloc/news_server_bloc.dart';
 import 'package:portfolio/features/notifications/presentations/bloc/image_repo_bloc.dart';
 import 'package:portfolio/features/projects/presentation/bloc/projects_bloc.dart';
 import 'package:portfolio/features/resume/presentation/bloc/resume_bloc.dart';
@@ -17,16 +19,17 @@ import 'package:portfolio/features/whatsnew/presentation/bloc/whats_new_bloc.dar
 void main() {
   configureDependencies();
   Bloc.observer = AppGlobalBlocObserver();
-  runApp(const Portfolio());
+  runApp(const ProviderScope(child: Portfolio()));
 }
 
 ///[Portfolio] class which is the root widget of this app
-class Portfolio extends StatelessWidget {
+class Portfolio extends ConsumerWidget {
   ///constructor of this [Portfolio] app
   const Portfolio({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
+        final isDarkMode = ref.watch(themeStateProvider);
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -42,9 +45,11 @@ class Portfolio extends StatelessWidget {
         BlocProvider(create: (_) => getIt<ServicesBloc>()),
         BlocProvider(create: (_) => getIt<ImageRepoBloc>()),
         BlocProvider(create: (_) => getIt<WhatsNewBloc>()),
+        BlocProvider(create: (_) => getIt<NewsServerBloc>()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
+        themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
         theme: FlexThemeData.light(
           colors: const FlexSchemeColor(
             primary: Color(0xffdc3535),
@@ -165,3 +170,7 @@ class Portfolio extends StatelessWidget {
     );
   }
 }
+
+final themeStateProvider = StateProvider<bool>((ref) {
+  return false;
+});

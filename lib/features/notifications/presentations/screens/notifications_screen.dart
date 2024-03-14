@@ -1,18 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:portfolio/features/notifications/presentations/bloc/image_repo_bloc.dart';
 import 'package:portfolio/features/whatsnew/presentation/bloc/whats_new_bloc.dart';
+import 'package:portfolio/main.dart';
 
-class NotificationsScreen extends StatefulWidget {
+class NotificationsScreen extends ConsumerStatefulWidget {
   const NotificationsScreen({super.key});
 
   @override
-  State<NotificationsScreen> createState() => _NotificationsScreenState();
+  ConsumerState<NotificationsScreen> createState() =>
+      _NotificationsScreenState();
 }
 
-class _NotificationsScreenState extends State<NotificationsScreen> {
+class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
   @override
   void initState() {
     super.initState();
@@ -22,10 +25,24 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeWatcher = ref.watch(themeStateProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Notifications'),
         centerTitle: true,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(
+                onPressed: () {
+                  ref.read(themeStateProvider.notifier).state =
+                      !ref.read(themeStateProvider);
+                },
+                icon: themeWatcher
+                    ? const Icon(Icons.light_mode)
+                    : const Icon(Icons.dark_mode)),
+          )
+        ],
       ),
       body: ListView(
         children: [
@@ -52,13 +69,17 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                     child: Stack(
                       children: [
                         CachedNetworkImage(
-                          imageUrl: '$imgData',
-                          fit: BoxFit.cover,
-                          height: mediaQuery.height * 0.4,
-                          width: double.infinity,
-                          colorBlendMode: BlendMode.darken,
-                          color: Colors.black.withOpacity(.5),
-                        ),
+                            imageUrl: '$imgData',
+                            fit: BoxFit.cover,
+                            height: mediaQuery.height * 0.4,
+                            width: double.infinity,
+                            colorBlendMode: BlendMode.darken,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .tertiary
+                                .withOpacity(.5)
+                            // Colors.black.withOpacity(.5),
+                            ),
                         Positioned(
                             top: 250,
                             left: 95,
@@ -66,8 +87,13 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                               children: [
                                 Text(
                                   'Cj',
-                                  style:
-                                      Theme.of(context).textTheme.displaySmall,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displaySmall
+                                      ?.copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary),
                                 ),
                                 Text(
                                   'Developer  \u2022 Engineer  \u2022 Designer',
@@ -75,6 +101,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                       .textTheme
                                       .bodySmall
                                       ?.copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary,
                                           fontStyle: FontStyle.italic,
                                           fontSize: 17),
                                 )
