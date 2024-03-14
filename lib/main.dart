@@ -7,10 +7,12 @@ import 'package:portfolio/di/di.dart';
 import 'package:portfolio/features/blogs/presentation/bloc/blogs_bloc.dart';
 import 'package:portfolio/features/contacts/presentation/bloc/contact_info_bloc.dart';
 import 'package:portfolio/features/imageCarousel/presentation/bloc/carousel_images_bloc.dart';
+import 'package:portfolio/features/notifications/presentations/bloc/image_repo_bloc.dart';
 import 'package:portfolio/features/projects/presentation/bloc/projects_bloc.dart';
 import 'package:portfolio/features/resume/presentation/bloc/resume_bloc.dart';
 import 'package:portfolio/features/services/presentation/bloc/services_bloc.dart';
 import 'package:portfolio/features/welcomeCard/presentation/bloc/bio_card_bloc.dart';
+import 'package:portfolio/features/whatsnew/presentation/bloc/whats_new_bloc.dart';
 
 void main() {
   configureDependencies();
@@ -35,10 +37,11 @@ class Portfolio extends StatelessWidget {
         ),
         BlocProvider(create: (_) => getIt<ContactInfoBloc>()),
         BlocProvider(create: (_) => getIt<BlogsBloc>()),
-        BlocProvider(create: (_)=>getIt<ProjectsBloc>()),
-        BlocProvider(create: (_)=>getIt<ResumeBloc>()),
-          BlocProvider(create: (_)=>getIt<ServicesBloc>())
-
+        BlocProvider(create: (_) => getIt<ProjectsBloc>()),
+        BlocProvider(create: (_) => getIt<ResumeBloc>()),
+        BlocProvider(create: (_) => getIt<ServicesBloc>()),
+        BlocProvider(create: (_) => getIt<ImageRepoBloc>()),
+        BlocProvider(create: (_) => getIt<WhatsNewBloc>()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
