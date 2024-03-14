@@ -1,7 +1,7 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:portfolio/common/router/app_router.dart';
+import 'package:portfolio/common/router/stateful_router.dart';
 import 'package:portfolio/common/util/app_global_bloc_observer.dart';
 import 'package:portfolio/di/di.dart';
 import 'package:portfolio/features/blogs/presentation/bloc/blogs_bloc.dart';
@@ -9,6 +9,7 @@ import 'package:portfolio/features/contacts/presentation/bloc/contact_info_bloc.
 import 'package:portfolio/features/imageCarousel/presentation/bloc/carousel_images_bloc.dart';
 import 'package:portfolio/features/projects/presentation/bloc/projects_bloc.dart';
 import 'package:portfolio/features/resume/presentation/bloc/resume_bloc.dart';
+import 'package:portfolio/features/services/presentation/bloc/services_bloc.dart';
 import 'package:portfolio/features/welcomeCard/presentation/bloc/bio_card_bloc.dart';
 
 void main() {
@@ -35,7 +36,8 @@ class Portfolio extends StatelessWidget {
         BlocProvider(create: (_) => getIt<ContactInfoBloc>()),
         BlocProvider(create: (_) => getIt<BlogsBloc>()),
         BlocProvider(create: (_)=>getIt<ProjectsBloc>()),
-        BlocProvider(create: (_)=>getIt<ResumeBloc>())
+        BlocProvider(create: (_)=>getIt<ResumeBloc>()),
+          BlocProvider(create: (_)=>getIt<ServicesBloc>())
 
       ],
       child: MaterialApp.router(
@@ -154,7 +156,8 @@ class Portfolio extends StatelessWidget {
           swapLegacyOnMaterial3: true,
         ),
 
-        routerConfig: AppRouter.router,
+        //routerConfig: AppRouter.router,
+        routerConfig: goRouter,
       ),
     );
   }

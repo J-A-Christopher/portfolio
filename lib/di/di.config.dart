@@ -60,6 +60,16 @@ import 'package:portfolio/features/resume/domain/usecases/resume_usecase.dart'
     as _i29;
 import 'package:portfolio/features/resume/presentation/bloc/resume_bloc.dart'
     as _i28;
+import 'package:portfolio/features/services/data/datasources/service_datasource.dart'
+    as _i32;
+import 'package:portfolio/features/services/data/repository/services_data_repo.dart'
+    as _i34;
+import 'package:portfolio/features/services/domain/repository/services_repo.dart'
+    as _i33;
+import 'package:portfolio/features/services/domain/usecase/services_usecase.dart'
+    as _i35;
+import 'package:portfolio/features/services/presentation/bloc/services_bloc.dart'
+    as _i36;
 import 'package:portfolio/features/welcomeCard/data/datasources/aboutme_datasource.dart'
     as _i3;
 import 'package:portfolio/features/welcomeCard/data/repository/aboutme_data_repo.dart'
@@ -67,7 +77,7 @@ import 'package:portfolio/features/welcomeCard/data/repository/aboutme_data_repo
 import 'package:portfolio/features/welcomeCard/domain/repositories/welcome.repo.dart'
     as _i4;
 import 'package:portfolio/features/welcomeCard/domain/usecases/welcome_usecase.dart'
-    as _i32;
+    as _i37;
 import 'package:portfolio/features/welcomeCard/presentation/bloc/bio_card_bloc.dart'
     as _i6;
 
@@ -106,7 +116,11 @@ extension GetItInjectableX on _i1.GetIt {
     gh.factory<_i28.ResumeBloc>(() => _i28.ResumeBloc());
     gh.factory<_i29.ResumeCases>(() => _i29.ResumeCases());
     gh.factory<_i30.ResumeRep>(() => _i31.ResumeSourceImpl());
-    gh.factory<_i32.WelcomeUseCase>(() => _i32.WelcomeUseCase());
+    gh.factory<_i32.ServiceDataSource>(() => _i32.ServiceDataSourceImpl());
+    gh.factory<_i33.ServiceRepos>(() => _i34.ServicesRepoImpl());
+    gh.factory<_i35.ServiceUseCase>(() => _i35.ServiceUseCase());
+    gh.factory<_i36.ServicesBloc>(() => _i36.ServicesBloc());
+    gh.factory<_i37.WelcomeUseCase>(() => _i37.WelcomeUseCase());
     return this;
   }
 }

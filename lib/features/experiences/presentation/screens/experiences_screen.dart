@@ -94,6 +94,8 @@ class _ExperiencesState extends State<Experiences> {
                         ),
                         Positioned(
                           bottom: 30,
+                          left: 8,
+                          right: 8,
                           child: Container(
                             width: mediaQuery.width,
                             decoration: BoxDecoration(
@@ -112,9 +114,14 @@ class _ExperiencesState extends State<Experiences> {
                                   padding: const EdgeInsets.only(left: 5.0),
                                   child: Text(
                                     '${carouselObject[index].imgDescription}',
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 22),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .secondaryContainer,
+                                            fontSize: 20),
                                   ),
                                 )),
                           ),
