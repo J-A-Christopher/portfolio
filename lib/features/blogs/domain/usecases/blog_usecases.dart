@@ -9,7 +9,7 @@ import 'package:portfolio/features/blogs/domain/repositories/domain_repository.d
 class BlogUseCases {
   Future<Either<Failure, List<BlogEntity>>> blogUseCases() async {
     final dataRepo = getIt<DomainRepository>();
-    final result = dataRepo.blogDomainRepository();
+    final result =await dataRepo.blogDomainRepository();
     return result;
   }
 }
