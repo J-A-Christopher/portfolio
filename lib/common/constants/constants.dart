@@ -1,1 +1,1 @@
-const baseServerUrl = 'http://192.168.116.96:8080/portfolio';
+const baseServerUrl = 'http://192.168.81.5:8080/portfolio';

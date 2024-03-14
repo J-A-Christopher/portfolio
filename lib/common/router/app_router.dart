@@ -44,7 +44,7 @@ class AppRouter {
           GoRoute(
               path: 'contact',
               builder: (context, state) => Contact(
-                  //description: description
+                  
                   ))
         ])
   ]);
