@@ -1,6 +1,7 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:portfolio/common/router/stateful_router.dart';
 import 'package:portfolio/common/util/app_global_bloc_observer.dart';
@@ -16,9 +17,10 @@ import 'package:portfolio/features/services/presentation/bloc/services_bloc.dart
 import 'package:portfolio/features/welcomeCard/presentation/bloc/bio_card_bloc.dart';
 import 'package:portfolio/features/whatsnew/presentation/bloc/whats_new_bloc.dart';
 
-void main() {
+void main() async {
   configureDependencies();
   Bloc.observer = AppGlobalBlocObserver();
+  await dotenv.load(fileName: ".env");
   runApp(const ProviderScope(child: Portfolio()));
 }
 
@@ -28,8 +30,8 @@ class Portfolio extends ConsumerWidget {
   const Portfolio({super.key});
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
-        final isDarkMode = ref.watch(themeStateProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkMode = ref.watch(themeStateProvider);
     return MultiBlocProvider(
       providers: [
         BlocProvider(

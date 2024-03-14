@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
@@ -59,85 +60,106 @@ class _NewsScreenState extends State<NewsScreen> {
         title: const Text('News'),
         centerTitle: true,
       ),
-      body: BlocBuilder<NewsServerBloc, NewsServerState>(
-          builder: (context, state) {
-        if (state is NewsServerLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        if (state is NewsServerLoaded) {
-          final newsObject = state.newsData;
-          final mediaQuery = MediaQuery.of(context).size;
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListView.builder(
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 10.0),
-                  child: Card(
-                    child: Stack(
-                      clipBehavior: Clip.hardEdge,
-                      children: [
-                        CachedNetworkImage(
-                            height: 300,
-                            placeholder: (context, url) => Image.asset(
-                                  'assets/placeholder.png',
-                                  fit: BoxFit.cover,
+      body: BlocListener<NewsServerBloc, NewsServerState>(
+        listener: (context, state) {
+          if (state is NewsServerError) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.errorMessage)));
+          }
+        },
+        child: BlocBuilder<NewsServerBloc, NewsServerState>(
+            builder: (context, state) {
+          if (state is NewsServerLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (state is NewsServerLoaded) {
+            final newsObject = state.newsData;
+            final mediaQuery = MediaQuery.of(context).size;
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: Card(
+                      child: Stack(
+                        clipBehavior: Clip.hardEdge,
+                        children: [
+                          CachedNetworkImage(
+                              height: 300,
+                              placeholder: (context, url) => Image.asset(
+                                    'assets/placeholder.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                              errorWidget: (context, url, error) => Image.asset(
+                                    'assets/placeholder.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              imageUrl: '${newsObject[index].urlToImage}'),
+                          Positioned(
+                              bottom: 0,
+                              child: Container(
+                                color: Theme.of(context).colorScheme.secondary,
+                                width: mediaQuery.width,
+                                height: 160,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 8.0, right: 8),
+                                  child: Column(
+                                    children: [
+                                      Expanded(
+                                        child: AutoSizeText(
+                                            '${newsObject[index].title}',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium),
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Expanded(
+                                        child: AutoSizeText(
+                                          newsObject[index].description ?? '',
+                                          maxLines: 3,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      const Spacer(),
+                                      Expanded(
+                                        child: ElevatedButton.icon(
+                                            style: ElevatedButton.styleFrom(
+                                                fixedSize: const Size(200, 50)),
+                                            onPressed: () {
+                                              _readMore(context,
+                                                  newsObject[index].url);
+                                            },
+                                            icon: const Icon(
+                                                Icons.remove_red_eye),
+                                            label: const Text('READ MORE')),
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      )
+                                    ],
+                                  ),
                                 ),
-                            errorWidget: (context, url, error) => Image.asset(
-                                  'assets/placeholder.png',
-                                  fit: BoxFit.cover,
-                                ),
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                            imageUrl: '${newsObject[index].urlToImage}'),
-                        Positioned(
-                            bottom: 0,
-                            child: Container(
-                              color: Theme.of(context).colorScheme.secondary,
-                              width: mediaQuery.width,
-                              height: 160,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 8.0, right: 8),
-                                child: Column(
-                                  children: [
-                                    AutoSizeText('${newsObject[index].title}',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleMedium),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    AutoSizeText(
-                                      newsObject[index].description ?? '',
-                                      maxLines: 3,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    ElevatedButton.icon(
-                                        onPressed: () {
-                                          _readMore(
-                                              context, newsObject[index].url);
-                                        },
-                                        icon: const Icon(Icons.remove_red_eye),
-                                        label: const Text('READ MORE'))
-                                  ],
-                                ),
-                              ),
-                            )),
-                      ],
+                              )),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
-              itemCount: newsObject.length,
-            ),
-          );
-        }
-        return const SizedBox();
-      }),
+                  );
+                },
+                itemCount: newsObject.length,
+              ),
+            );
+          }
+          return const SizedBox();
+        }),
+      ),
     );
   }
 }
-

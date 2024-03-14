@@ -66,7 +66,7 @@ class GridComponent extends StatelessWidget {
                           children: [
                             Image.asset(
                               'assets/${gridImageName[index]}.png',
-                              height: 120,
+                              height: MediaQuery.of(context).size.height * 0.12,
                               fit: BoxFit.cover,
                             ),
                             Padding(
@@ -83,6 +83,37 @@ class GridComponent extends StatelessWidget {
                         ),
                       ),
                     ),
+                    // Card(
+                    //   elevation: 5,
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.all(8.0),
+                    //     child: Column(
+                    //       children: [
+                    //         Expanded(
+                    //           child: Image.asset(
+                    //             'assets/${gridImageName[index]}.png',
+                    //             //height: 120,
+
+                    //             fit: BoxFit.cover,
+                    //           ),
+                    //         ),
+                    //         const SizedBox(
+                    //           height: 5,
+                    //         ),
+                    //         // const Spacer(),
+                    //         Expanded(
+                    //           child: Text(
+                    //             gridTitle[index],
+                    //             style: Theme.of(context)
+                    //                 .textTheme
+                    //                 .bodyMedium
+                    //                 ?.copyWith(fontSize: 15),
+                    //           ),
+                    //         )
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                   ))),
     );
   }
