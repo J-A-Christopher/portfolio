@@ -124,7 +124,7 @@ class _NewsScreenState extends State<NewsScreen> {
                                       Expanded(
                                         child: AutoSizeText(
                                           newsObject[index].description ?? '',
-                                          maxLines: 3,
+                                          maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                       ),

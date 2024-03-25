@@ -81,8 +81,8 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
                             // Colors.black.withOpacity(.5),
                             ),
                         Positioned(
-                            top: 250,
-                            left: 95,
+                            top: mediaQuery.height * 0.24,
+                            left: mediaQuery.width * 0.2,
                             child: Column(
                               children: [
                                 Text(
